@@ -1,0 +1,13 @@
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+First Name <br>
+<input type="text" data-bind="value:firstName"/>
+<span data-bind="text:firstName"></span>
+
+<script type="text/javascript">
+function AppViewModel() {
+  this.firstName = ko.observable("John");
+}
+
+ko.applyBindings(new AppViewModel());
+</script>

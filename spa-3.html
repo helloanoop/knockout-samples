@@ -1,0 +1,73 @@
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+<style>
+.selected{
+  font-weight: bold;
+}
+</style>
+<ul data-bind="foreach:folders">
+  <li data-bind="text:$data, css:{selected: $data == $root.chosenFolderId()}, click: $root.goToFolder"></li>
+</ul>
+<!-- Mails grid -->
+<table class="mails" data-bind="with: chosenFolderData">
+    <thead><tr><th>From</th><th>To</th><th>Subject</th><th>Date</th></tr></thead>
+    <tbody data-bind="foreach: mails">
+        <tr data-bind="click: $root.goToMail">
+            <td data-bind="text: from"></td>
+            <td data-bind="text: to"></td>
+            <td data-bind="text: subject"></td>
+            <td data-bind="text: date"></td>
+        </tr>     
+    </tbody>
+</table>
+
+<!-- Chosen mail -->
+<div class="viewMail" data-bind="with: chosenMailData">
+    <div class="mailInfo">
+        <h1 data-bind="text: subject"></h1>
+        <p><label>From</label>: <span data-bind="text: from"></span></p>
+        <p><label>To</label>: <span data-bind="text: to"></span></p>
+        <p><label>Date</label>: <span data-bind="text: date"></span></p>
+    </div>
+    <p class="message" data-bind="html: messageContent" />
+</div>
+
+<script type="text/javascript">
+function WebmailViewModel() {
+  // Data
+  var self = this;
+  self.folders = ['Inbox', 'Archive', 'Sent', 'Spam'];
+  self.chosenFolderId = ko.observable();
+  self.chosenFolderData = ko.observable();
+  self.chosenMailData = ko.observable();
+
+  self.goToFolder = function(folder) {
+    self.chosenFolderData({
+      mails: [{
+        date: "May 2, 2011",
+        folder: "Archive",
+        from: "adele.guyuson@hat-chicken6.xyz",
+        id: 13,
+        subject: "RE: Reservation confirmation #999331516",
+        to:"steve@example.com",
+        messageContent: "This is an email"
+      }]
+    });
+  };
+
+  self.goToMail = function(mail) { 
+    self.chosenFolderId(mail.folder);
+    self.chosenFolderData(null); // Stop showing a folder
+    self.chosenMailData({
+      date: "May 2, 2011",
+      folder: "Archive",
+      from: "adele.guyuson@hat-chicken6.xyz",
+      id: 13,
+      subject: "RE: Reservation confirmation #999331516",
+      to:"steve@example.com",
+      messageContent: "This is an email"
+    });
+  };
+};
+
+ko.applyBindings(new WebmailViewModel());
+</script>

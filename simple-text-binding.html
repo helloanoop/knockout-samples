@@ -1,0 +1,13 @@
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+<p>First Name: <strong data-bind="text:firstName"></strong></p>
+<p>Last Name: <strong data-bind="text:lastName"></strong></p>
+
+<script type="text/javascript">
+function AppViewModel() {
+  this.firstName = "John";
+  this.lastName = "Nash";
+}
+
+ko.applyBindings(new AppViewModel());
+</script>
