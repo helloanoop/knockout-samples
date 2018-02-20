@@ -1,0 +1,15 @@
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+<p>Total Items: <strong data-bind="text:items().length"></strong></p>
+
+<script type="text/javascript">
+function AppViewModel() {
+  this.items = ko.observableArray([
+    { name: "Bungle", type: "Bear" },
+    { name: "George", type: "Hippo" },
+    { name: "Zippy", type: "Unknown" }    
+  ]);
+}
+
+ko.applyBindings(new AppViewModel());
+</script>

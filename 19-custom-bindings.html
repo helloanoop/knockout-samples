@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<!-- Docs
+ko.bindingHandlers.yourBindingName = {
+    init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+        // This will be called when the binding is first applied to an element
+        // Set up any initial state, event handlers, etc. here
+    },
+    update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+        // This will be called once when the binding is first applied to an element,
+        // and again whenever any observables/computeds that are accessed change
+        // Update the DOM element based on the supplied values here.
+    }
+}; -->
+<head>
+  <meta name="description" content="Knockout Custom Binding - 1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>KO Custom Binding -1</title>
+</head>
+<body>
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+  <div style="width:100px;height:100px;background-color:red;color:white"
+    data-bind="slideVisible:isVisible, slideDuration:2000, text:firstName"></div>
+  
+  <button data-bind="click:toggle">Toggle</button>
+</body>
+
+<script type="text/javascript">
+ko.bindingHandlers.slideVisible = {
+  update: function(element, valueAccessor, allBindings, viewModel) {
+      console.log(allBindings.get('text'));
+      var value = valueAccessor();
+      var valueUnwrapped = ko.unwrap(value);
+      var duration = allBindings.get('slideDuration') || 400;
+      if (valueUnwrapped == true)
+          $(element).slideDown(duration); // Make the element visible
+      else
+          $(element).slideUp(duration);   // Make the element invisible
+  }
+};
+
+var viewModel = {};
+viewModel.duration = 5000;
+viewModel.firstName = 'John';
+viewModel.isVisible = ko.observable(true);
+viewModel.toggle = function() {
+  viewModel.isVisible(!viewModel.isVisible());
+}
+
+ko.applyBindings(viewModel);
+</script>
+</html>
+
+
+
+<!-- // update: function(element, valueAccessor, allBindings) {
+//   var value = valueAccessor();
+//   var valueUnwrapped = ko.unwrap(value);
+//   $(element).toggle(valueUnwrapped);
+
+// } -->

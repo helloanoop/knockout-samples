@@ -1,0 +1,13 @@
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+<a data-bind="attr: { href: url, title: details }">
+  Report
+</a>
+ 
+<script type="text/javascript">
+var viewModel = {
+  url: ko.observable("year-end.html"),
+  details: ko.observable("Report including final year-end statistics")
+};
+ko.applyBindings(viewModel);
+</script>

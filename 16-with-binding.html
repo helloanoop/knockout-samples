@@ -1,0 +1,17 @@
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+<h1 data-bind="text: city"> </h1>
+<p data-bind="with: coords">
+    Latitude: <span data-bind="text: latitude"> </span>,
+    Longitude: <span data-bind="text: longitude"> </span>
+</p>
+ 
+<script type="text/javascript">
+ko.applyBindings({
+    city: "London",
+    coords: {
+        latitude:  51.5001524,
+        longitude: -0.1262362
+    }
+});
+</script>

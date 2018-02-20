@@ -1,0 +1,31 @@
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+<style>
+.profitSuccess{
+    background-color: green;
+    color: white;
+}
+.profitWarning{
+    background-color: red;
+    color: white;
+}
+</style>
+
+<div data-bind="css: profitStatus">
+  Profit Information
+</div>
+ 
+<script type="text/javascript">
+var viewModel = {
+  currentProfit: ko.observable(150)
+};
+
+viewModel.profitStatus = ko.computed(function() {
+  return this.currentProfit() > 0 ? 'profitSuccess': 'profitWarning';
+}, viewModel);
+
+setTimeout(function() {
+  viewModel.currentProfit(-90);
+}, 1000);
+ko.applyBindings(viewModel);
+</script>

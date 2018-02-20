@@ -1,0 +1,23 @@
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+<p>First Name: <strong data-bind="text:firstName"></strong></p>
+<p>Last Name: <strong data-bind="text:lastName"></strong></p>
+
+<script type="text/javascript">
+function AppViewModel() {
+  let self = this;
+  this.firstName = ko.observable("John");
+  this.lastName = ko.observable("Nash");
+
+  this.firstName.subscribe((val) => {
+    console.log(`Value Changed: ${val}`);
+  });
+
+  setTimeout(() => {
+    self.firstName('Isaac');
+    self.lastName('Newton');
+  }, 1000);
+}
+
+ko.applyBindings(new AppViewModel());
+</script>

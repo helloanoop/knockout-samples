@@ -1,0 +1,36 @@
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+<h2>Like Widget</h2>
+<div data-bind='component: "like-widget"'></div>
+
+<like-widget></like-widget>
+
+<script type="text/javascript">
+ko.components.register('like-widget', {
+  viewModel: function(params) {
+    // Data: value is either null, 'like', or 'dislike'
+    this.chosenValue = ko.observable(params ? params.value : null);
+
+    // Behaviors
+    this.like = function() { this.chosenValue('like'); }.bind(this);
+    this.dislike = function() { this.chosenValue('dislike'); }.bind(this);
+
+    this.showLike = ko.computed(function() {
+      return this.chosenValue() == 'dislike' || !this.chosenValue();
+    }, this);
+
+    this.showDislike = ko.computed(function() {
+      return this.chosenValue() == 'like' || !this.chosenValue();
+    }, this);
+  },
+  // template: { require: 'text!path/my-html-file.html' },
+  template: '<div class="like-or-dislike">\
+            <button data-bind="click: like, visible: showLike">Like it</button>\
+            <button data-bind="click: dislike, visible: showDislike()">Dislike it</button>\
+        </div>\
+        <div class="result" data-bind="visible: chosenValue">\
+            You <strong data-bind="text: chosenValue"></strong> it\
+        </div>'
+});
+ko.applyBindings();
+</script>

@@ -1,0 +1,22 @@
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+Here are the participants:
+<div data-bind="template: { name: 'person-template', foreach: people}"></div>
+
+<script type="text/html" id="person-template">
+  <h3 data-bind="text: name"></h3>
+  <p>Credits: <span data-bind="text: credits"></span></p>
+</script>
+ 
+<script type="text/javascript">
+var viewModel = {
+  people: [{
+    name: 'Franklin',
+    credits: 250
+  }, {
+    name: 'Mario',
+    credits: 5800 
+  }]
+};
+ko.applyBindings(viewModel);
+</script>

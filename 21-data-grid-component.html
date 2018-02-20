@@ -1,0 +1,49 @@
+<script src = "knockout.js"></script>
+<script src = "jquery.min.js"></script>
+<script src="http://localhost:35729/livereload.js"></script>
+
+<script type="text/html" id="data-grid-template">
+  <table>
+    <thead>
+      <tr data-bind="foreach: headers">
+        <th data-bind="text:name"></th>
+      </tr>
+    </thead>
+    <tbody data-bind="foreach: items">
+      <tr data-bind="foreach: $parent.headers">
+        <td data-bind="text:$parent[key]"></td>
+      </tr>
+    </tbody>
+  </table>
+</script>
+
+<data-grid params="{headers: headers, items: items}"></data-grid>
+
+<script>
+var viewModel = {
+  headers: [{
+    name: 'Animal Name',
+    key: 'name'
+  }, {
+    name: 'Type',
+    key: 'type'
+  }, {
+    name: 'Age',
+    key: 'age'
+  }],
+  items: ko.observableArray([
+    { name: "Bungle", type: "Bear", age: 28 },
+    { name: "George", type: "Hippo" , age: 90},
+    { name: "Zippy", type: "Unknown" , age: 20}    
+  ])
+};
+ko.components.register('data-grid', {
+  viewModel: function(params) {
+    this.headers = params.headers;
+    this.items = params.items;
+  },
+  template: "<div data-bind=\"template: {name: 'data-grid-template'}\"></div>"
+});
+
+ko.applyBindings(viewModel);
+</script>
