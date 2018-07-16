@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<!-- Docs
+ko.bindingHandlers.yourBindingName = {
+    init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+        // This will be called when the binding is first applied to an element
+        // Set up any initial state, event handlers, etc. here
+    },
+    update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+        // This will be called once when the binding is first applied to an element,
+        // and again whenever any observables/computeds that are accessed change
+        // Update the DOM element based on the supplied values here.
+    }
+}; -->
+<head>
+  <meta name="description" content="Knockout Custom Binding - 1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>KO Custom Binding - 2</title>
+</head>
+<body>
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+
+  <table>
+    <tbody data-bind="foreach:accounts">
+      <tr data-bind="displayStatus:status, colors:['blue', 'yellow']">
+        <td data-bind="text:id"></td>
+        <td data-bind="text:name"></td>
+        <td data-bind="text:balance"></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+<script type="text/javascript">
+function Account(id, name, balance, status) {
+  this.id = id;
+  this.name = name;
+  this.balance = balance;
+  this.status = status;
+}
+
+var viewModel = {};
+viewModel.accounts = ko.observableArray([
+    new Account(1, "Anoop", 2000, "Active"),
+    new Account(2, "Anusree", 2000, "Inactive"),
+    new Account(3, "Sunil", 3000, "Closed"),
+    new Account(4, "Manasa", 5000, "Active")
+  ]);
+
+ko.bindingHandlers.displayStatus = {
+  update: function(element, valueAccessor, allBindings, viewModel) {
+      var value = valueAccessor();
+      var valueUnwrapped = ko.unwrap(value);
+
+      var activeColor = "green";
+      var inactiveColor = "red";
+
+      if(allBindings.has('colors')) {
+        var colors= allBindings.get('colors');
+        activeColor = colors[0];
+        inactiveColor = colors[1];
+      }
+
+      switch(valueUnwrapped.toLowerCase()){
+        case "active":
+          element.style['color'] = activeColor;
+          break;
+        case "closed":
+          element.style['text-decoration'] = 'line-through';
+          break;
+        case "inactive":
+          element.style['color'] = inactiveColor;
+          break;
+      }
+  }
+};
+
+ko.applyBindings(viewModel);
+</script>
+</html>
