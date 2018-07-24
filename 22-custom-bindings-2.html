@@ -40,43 +40,46 @@ function Account(id, name, balance, status) {
   this.balance = balance;
   this.status = status;
 }
-
 var viewModel = {};
 viewModel.accounts = ko.observableArray([
-    new Account(1, "Anoop", 2000, "Active"),
+    new Account(1, "Anoop", 2000, ko.observable("Active")),
     new Account(2, "Anusree", 2000, "Inactive"),
     new Account(3, "Sunil", 3000, "Closed"),
     new Account(4, "Manasa", 5000, "Active")
   ]);
-
 ko.bindingHandlers.displayStatus = {
+  init: function(element, valueAccessor, allBindings, viewModel) {
+    console.log("Initializing");
+    viewModel.activeColor = "green";
+    viewModel.inactiveColor = "red";
+
+    if(allBindings.has('colors')) {
+      var colors= allBindings.get('colors');
+      viewModel.activeColor = colors[0];
+      viewModel.inactiveColor = colors[1];
+    }
+  },
   update: function(element, valueAccessor, allBindings, viewModel) {
+      console.log("Updating");
       var value = valueAccessor();
       var valueUnwrapped = ko.unwrap(value);
 
-      var activeColor = "green";
-      var inactiveColor = "red";
-
-      if(allBindings.has('colors')) {
-        var colors= allBindings.get('colors');
-        activeColor = colors[0];
-        inactiveColor = colors[1];
-      }
-
       switch(valueUnwrapped.toLowerCase()){
         case "active":
-          element.style['color'] = activeColor;
+          element.style['color'] = viewModel.activeColor;
           break;
         case "closed":
           element.style['text-decoration'] = 'line-through';
           break;
         case "inactive":
-          element.style['color'] = inactiveColor;
+          element.style['color'] = viewModel.inactiveColor;
           break;
       }
   }
 };
-
+setTimeout(function() {
+  viewModel.accounts()[0].status("Closed");
+}, 1500);
 ko.applyBindings(viewModel);
 </script>
 </html>
