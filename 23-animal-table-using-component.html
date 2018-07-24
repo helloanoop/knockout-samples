@@ -1,0 +1,46 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-debug.js"></script>
+
+<animal-table params="{data: animals}"></animal-table>
+
+<script type="text/html" id="animal-table">
+  <table>
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+    </thead>
+    <tbody data-bind="foreach:cAnimals">
+      <tr>
+        <td data-bind="text:name"></td>
+        <td data-bind="text:type"></td>
+      </tr>
+    </tbody>
+  </table>
+</script>
+
+
+<script>
+  var animals = [{
+    name: "Tom",
+    type: "Cat"
+  }, {
+    name: "Jerry",
+    type: "Mouse"
+  }, {
+    name: "Spike",
+    type: "Dog"
+  }];
+
+  ko.components.register('animal-table', {
+    viewModel: function(params) {
+      this.cAnimals = params.data;
+    },
+    template: '<div data-bind="template:{name: \'animal-table\'}"></div>'
+  });
+
+  ko.applyBindings({
+    animals: animals
+  });
+</script>
+
+
+
