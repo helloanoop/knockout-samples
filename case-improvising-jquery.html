@@ -1,0 +1,45 @@
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-debug.js"></script>
+
+<table>
+  <thead>
+    <th>Name</th>
+    <th>Type</th>
+  </thead>
+  <tbody data-bind="foreach:animals">
+    <tr>
+      <td data-bind="text:name"></td>
+      <td data-bind="text:type"></td>
+    </tr>
+  </tbody>
+</table>
+
+<script>
+  var animals = [{
+    name: "Tom",
+    type: "Cat"
+  }, {
+    name: "Jerry",
+    type: "Mouse"
+  }, {
+    name: "Spike",
+    type: "Dog"
+  }];
+
+  ko.applyBindings({
+    animals: animals
+  });
+
+  // for(var i = 0; i < animals.length; i++) {
+  //   var html = "<tr><td>" + animals[i].name +
+  //               "</td><td>" + animals[i].type +
+  //               "</td></tr>"
+
+  //   $("tbody").append(html);
+  // }
+</script>
+
+
+

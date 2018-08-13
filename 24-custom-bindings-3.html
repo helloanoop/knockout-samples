@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <title>KO Custom Binding - 3</title>
+</head>
+<body>
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+
+  <table>
+    <tbody data-bind="foreach:accounts">
+      <tr>
+        <td data-bind="text:id"></td>
+        <td data-bind="text:name"></td>
+        <td data-bind="text:balance"></td>
+        <td data-bind="datetime: created_at"></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+<script type="text/javascript">
+function Account(id, name, balance, status, createdAt) {
+  this.id = id;
+  this.name = name;
+  this.balance = balance;
+  this.status = status;
+  this.created_at = createdAt;
+}
+var viewModel = {};
+viewModel.accounts = ko.observableArray([
+    new Account(1, "Anoop", 2000, ko.observable("Active"), "1990/12/10"),
+    new Account(2, "Anusree", 2000, "Inactive", "1990/12/11"),
+    new Account(3, "Sunil", 3000, "Closed", "1990/12/12"),
+    new Account(4, "Manasa", 5000, "Active", "1990/12/13")
+  ]);
+ko.bindingHandlers.datetime = {
+  init: function(element, valueAccessor, allBindings, viewModel) {
+  },
+  update: function(element, valueAccessor, allBindings, viewModel) {
+  }
+};
+ko.applyBindings(viewModel);
+</script>
+</html>
